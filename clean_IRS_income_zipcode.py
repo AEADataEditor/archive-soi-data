@@ -29,13 +29,10 @@ except OSError as error:
 #
 # - WARNING: only download data from website once!
 # - Don't want to call IRS site too many times, or will get blocked
-years   = list(range(2004,2017))
+years   = list(range(1998,2020))
 irs_url = 'https://www.irs.gov/pub/irs-soi/'
 
 for yy in years:
-
-        # Random pause to prevent bombarding website
-        sleep(randint(1,5))
 
         # File name
         if (yy<2013):
@@ -45,9 +42,13 @@ for yy in years:
 
         # Get full URL (needs to include the file name)
         url = irs_url + filename
+        savename = datadir + str(yy) + 'zipcodeincome.zip'
 
         # Download data from URL
-        urllib.request.urlretrieve(url, filename = datadir + str(yy) + 'zipcodeincome.zip')
-
-        print('Finished: ' + filename)
-
+        if os.path.exists(savename):
+            print("File already exists: " + filename)
+        else:
+            # Random pause to prevent bombarding website
+            sleep(randint(1,5))
+            urllib.request.urlretrieve(url, filename = savename)
+            print('Downloaded: ' + filename)
