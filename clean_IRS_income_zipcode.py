@@ -50,5 +50,11 @@ for yy in years:
         else:
             # Random pause to prevent bombarding website
             sleep(randint(1,5))
-            urllib.request.urlretrieve(url, filename = savename)
-            print('Downloaded: ' + filename)
+            print("Downloading:" + url)
+            try:
+                urllib.request.urlretrieve(url, filename = savename)
+                print('Downloaded: ' + filename)
+            except urllib.error.URLError as error:
+                print("Failed on: " + filename)
+                print("  Error: " + error.reason)
+            
